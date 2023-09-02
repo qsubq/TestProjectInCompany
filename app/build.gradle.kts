@@ -39,6 +39,9 @@ android {
 }
 
 dependencies {
+    // Picasso
+    implementation("com.squareup.picasso:picasso:2.71828")
+
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:${rootProject.extra["retrofitVersion"] as String}")
     implementation("com.squareup.retrofit2:converter-gson:${rootProject.extra["retrofitVersion"] as String}")
@@ -49,6 +52,7 @@ dependencies {
     // Navigation
     //noinspection GradleDependency
     implementation("androidx.navigation:navigation-fragment-ktx:${rootProject.extra["navigationVersion"] as String}")
+    //noinspection GradleDependency
     implementation("androidx.navigation:navigation-common-ktx:${rootProject.extra["navigationVersion"] as String}")
 
     implementation("androidx.core:core-ktx:1.9.0")

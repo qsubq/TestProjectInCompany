@@ -30,14 +30,21 @@ class HotelFragment : Fragment() {
                     tvName.text = response.body()?.name
                     tvRate.text = requireContext().getString(
                         R.string.rate_hotel,
-                        response.body()?.rating,
+                        response.body()?.rating.toString(),
                         response.body()?.rating_name,
                     )
                     tvPrice.text =
-                        requireContext().getString(R.string.price, response.body()?.minimal_price)
+                        requireContext().getString(R.string.price, response.body()?.minimal_price.toString())
                     tvAddress.text = response.body()?.adress
                     tvAboutTheHotel.text = response.body()?.about_the_hotel?.description
                     tvPriceForIt.text = response.body()?.price_for_it
+                    imgViewPager.adapter = response.body()?.image_urls?.let {
+                        HotelViewPagerAdapter(
+                            it
+                        )
+                    }
+
+                    binding.wormDotsIndicator.attachTo(binding.imgViewPager)
                 }
             }
         }
