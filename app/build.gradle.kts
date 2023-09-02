@@ -39,9 +39,15 @@ android {
 }
 
 dependencies {
-    
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:${rootProject.extra["retrofitVersion"] as String}")
+    implementation("com.squareup.retrofit2:converter-gson:${rootProject.extra["retrofitVersion"] as String}")
+
+    // Dots indicator
+    implementation("com.tbuonomo:dotsindicator:5.0")
 
     // Navigation
+    //noinspection GradleDependency
     implementation("androidx.navigation:navigation-fragment-ktx:${rootProject.extra["navigationVersion"] as String}")
     implementation("androidx.navigation:navigation-common-ktx:${rootProject.extra["navigationVersion"] as String}")
 
