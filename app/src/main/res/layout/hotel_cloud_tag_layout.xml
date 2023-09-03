@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cvCloud"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardMaxElevation="0dp"
+        android:elevation="0dp"
+        app:cardBackgroundColor="#FBFBFC"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvCloudString"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:text="3-я линия"
+            android:textColor="#828796"
+            android:textSize="16sp" />
+    </androidx.cardview.widget.CardView>
+
+</merge>

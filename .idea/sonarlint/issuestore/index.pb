@@ -15,3 +15,7 @@ Xapp/src/main/java/com/example/testprojectincompany/domain/repository/RemoteRepo
 kapp/src/main/java/com/example/testprojectincompany/data/remoteDataSource/repository/RemoteRepositoryImpl.kt,f\b\fb3c369c8e0ca05c589b9245cfe33694dc50800d
 
 Oapp/src/main/java/com/example/testprojectincompany/presentation/MainActivity.kt,2\4\24556ad17de5d8cf2e7b7cb04dab9a0a4f1e417c
+D
+app/build.gradle.kts,d\2\d2a4383452aad84a18429a5844d31330a012a9e6
+…
+Uapp/src/main/java/com/example/testprojectincompany/presentation/dialog/ErrorDialog.kt,a\8\a84f1c38f96cc2225bfdf25c8aca932da9f1fd88
