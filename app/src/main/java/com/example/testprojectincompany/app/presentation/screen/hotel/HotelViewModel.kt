@@ -1,4 +1,4 @@
-package com.example.testprojectincompany.presentation.screen.hotel
+package com.example.testprojectincompany.app.presentation.screen.hotel
 
 import android.app.Application
 import android.content.Context
@@ -15,8 +15,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class HotelViewModel(private val context: Application) : AndroidViewModel(context) {
-    private val getHotelDataUseCase = GetHotelDataUseCase(RemoteRepositoryImpl())
+class HotelViewModel(val context: Application, val getHotelDataUseCase: GetHotelDataUseCase) : AndroidViewModel(context) {
 
     private val _hotelLiveData: MutableLiveData<Response<HotelModel>> = MutableLiveData()
     var hotelLiveData: LiveData<Response<HotelModel>> = _hotelLiveData

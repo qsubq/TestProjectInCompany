@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -30,27 +31,38 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = "1.8"
+    }
     kotlinOptions {
         jvmTarget = "1.8"
     }
     buildFeatures {
         viewBinding = true
     }
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
-    // Flexbox
-    implementation("com.google.android.flexbox:flexbox:3.0.0")
+    // Dagger 2
+    implementation("com.google.dagger:dagger:2.43.2")
+    kapt("com.google.dagger:dagger-compiler:2.43.2")
+    implementation("javax.inject:javax.inject:1")
 
-    // Picasso
-    implementation("com.squareup.picasso:picasso:2.71828")
+    // Flexbox
+    implementation("com.google.android.flexbox:flexbox:${rootProject.extra["flexBoxVersion"] as String}")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.12.0")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:${rootProject.extra["retrofitVersion"] as String}")
     implementation("com.squareup.retrofit2:converter-gson:${rootProject.extra["retrofitVersion"] as String}")
 
     // Dots indicator
-    implementation("com.tbuonomo:dotsindicator:5.0")
+    implementation("com.tbuonomo:dotsindicator:${rootProject.extra["dotsIndicatorVersion"] as String}")
 
     // Navigation
     //noinspection GradleDependency

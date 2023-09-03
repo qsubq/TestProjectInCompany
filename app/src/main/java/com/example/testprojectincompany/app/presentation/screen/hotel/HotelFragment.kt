@@ -1,24 +1,38 @@
-package com.example.testprojectincompany.presentation.screen.hotel
+package com.example.testprojectincompany.app.presentation.screen.hotel
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.testprojectincompany.R
+import com.example.testprojectincompany.app.di.DaggerAppComponent
+import com.example.testprojectincompany.app.presentation.dialog.ErrorDialog
 import com.example.testprojectincompany.databinding.FragmentHotelBinding
-import com.example.testprojectincompany.presentation.dialog.ErrorDialog
 import com.example.testprojectincompany.utils.splitAtIndex
+import javax.inject.Inject
 
 class HotelFragment : Fragment() {
     private lateinit var binding: FragmentHotelBinding
-    private val viewModel by viewModels<HotelViewModel>()
+
+    @Inject
+    lateinit var viewModelFactory: HotelViewModelFactory
+
+    private lateinit var viewModel: HotelViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        val component =
+            DaggerAppComponent.builder().context(requireContext().applicationContext)
+                .build()
+        component.inject(this)
+
+        viewModel = ViewModelProvider(this, viewModelFactory)
+            .get(HotelViewModel::class.java)
+
         binding = FragmentHotelBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -48,6 +62,7 @@ class HotelFragment : Fragment() {
                             it.rating_name,
                         )
 
+                        // Пробел в шестизначных цифрах
                         if (it.minimal_price.toString().length >= 6) {
                             val priceString = it.minimal_price.toString()
                                 .splitAtIndex(it.minimal_price.toString().length / 2)

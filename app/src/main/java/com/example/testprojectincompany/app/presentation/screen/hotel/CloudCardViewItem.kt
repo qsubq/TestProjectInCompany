@@ -1,4 +1,4 @@
-package com.example.testprojectincompany.presentation.screen.hotel
+package com.example.testprojectincompany.app.presentation.screen.hotel
 
 import android.content.Context
 import android.view.LayoutInflater

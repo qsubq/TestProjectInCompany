@@ -1,10 +1,10 @@
-package com.example.testprojectincompany.presentation.screen.hotel
+package com.example.testprojectincompany.app.presentation.screen.hotel
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.testprojectincompany.databinding.HotelViewPagerItemBinding
-import com.squareup.picasso.Picasso
 
 class HotelViewPagerAdapter(private val listOfImages: List<String>) :
     RecyclerView.Adapter<HotelViewPagerAdapter.HotelViewHolder>() {
@@ -22,6 +22,7 @@ class HotelViewPagerAdapter(private val listOfImages: List<String>) :
     }
 
     override fun onBindViewHolder(holder: HotelViewHolder, position: Int) {
-        Picasso.get().load(listOfImages[position]).into(holder.binding.imgHotel)
+        Glide.with(holder.itemView.context).load(listOfImages[position])
+            .into(holder.binding.imgHotel)
     }
 }

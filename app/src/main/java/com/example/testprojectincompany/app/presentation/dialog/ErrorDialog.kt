@@ -1,4 +1,4 @@
-package com.example.testprojectincompany.presentation.dialog
+package com.example.testprojectincompany.app.presentation.dialog
 
 import android.app.AlertDialog
 import android.app.Dialog
