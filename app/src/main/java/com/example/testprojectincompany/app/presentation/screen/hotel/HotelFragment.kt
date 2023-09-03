@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.testprojectincompany.R
 import com.example.testprojectincompany.app.di.DaggerAppComponent
 import com.example.testprojectincompany.app.presentation.dialog.ErrorDialog
@@ -39,7 +40,6 @@ class HotelFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModel.hotelLiveData.observe(viewLifecycleOwner) { response ->
             binding.progressBar.visibility = View.GONE
 
@@ -81,6 +81,7 @@ class HotelFragment : Fragment() {
                                 )
                         }
 
+                        // Динамическое добавление, на случай изменения peculiarities
                         for (i in it.about_the_hotel.peculiarities) {
                             val cloudCardViewItem = CloudCardViewItem(
                                 requireContext(),
@@ -89,6 +90,15 @@ class HotelFragment : Fragment() {
                             cloudCardViewItem.elevation = 0F
                             cloudCardViewItem.cardElevation = 0F
                             flexBox.addView(cloudCardViewItem)
+                        }
+
+                        val bundle = Bundle()
+                        bundle.putString("nameOfHotel", it.name)
+                        binding.btnRoomChoose.setOnClickListener {
+                            findNavController().navigate(
+                                R.id.action_hotelFragment_to_roomFragment,
+                                bundle,
+                            )
                         }
                     }
                 }

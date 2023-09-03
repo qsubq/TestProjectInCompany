@@ -7,6 +7,9 @@
     <string name="rate_hotel">%1$s %2$s</string>
     <string name="price_for_two">от %1$s %2$s ₽</string>
     <string name="price">от %1$s ₽</string>
+    <string name="price_without_from">%1$s ₽</string>
+    <string name="price_for_two_without_from">%1$s %2$s  ₽</string>
     <string name="to_choose_room">К выбору номера</string>
     <string name="about_hotel">Об отеле</string>
+    <string name="to_order_room">Выбрать номер</string>
 </resources>

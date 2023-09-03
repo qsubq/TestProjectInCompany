@@ -21,6 +21,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="0dp"
@@ -55,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:elevation="0dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardElevation="6dp"
+                app:cardElevation="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView"
@@ -217,7 +218,7 @@
                 android:elevation="0dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
+                app:cardElevation="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView"
@@ -254,94 +255,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/materialTextView">
 
-                        <!--                        <androidx.cardview.widget.CardView-->
-                        <!--                            android:id="@+id/cardView4"-->
-                        <!--                            android:layout_width="wrap_content"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:layout_marginStart="16dp"-->
-                        <!--                            android:layout_marginTop="16dp"-->
-                        <!--                            app:cardBackgroundColor="#FBFBFC"-->
-                        <!--                            app:cardCornerRadius="5dp"-->
-                        <!--                            app:cardElevation="0dp"-->
-                        <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                        <!--                            app:layout_constraintTop_toBottomOf="@+id/materialTextView">-->
-
-                        <!--                            <com.google.android.material.textview.MaterialTextView-->
-                        <!--                                android:layout_width="wrap_content"-->
-                        <!--                                android:layout_height="wrap_content"-->
-                        <!--                                android:fontFamily="sans-serif-medium"-->
-                        <!--                                android:paddingHorizontal="10dp"-->
-                        <!--                                android:paddingVertical="5dp"-->
-                        <!--                                android:text="3-я линия"-->
-                        <!--                                android:textColor="#828796"-->
-                        <!--                                android:textSize="16sp" />-->
-                        <!--                        </androidx.cardview.widget.CardView>-->
-
-                        <!--                        <androidx.cardview.widget.CardView-->
-                        <!--                            android:layout_width="wrap_content"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:layout_marginStart="8dp"-->
-                        <!--                            android:layout_marginTop="16dp"-->
-                        <!--                            app:cardBackgroundColor="#FBFBFC"-->
-                        <!--                            app:cardCornerRadius="5dp"-->
-                        <!--                            app:cardElevation="0dp"-->
-                        <!--                            app:layout_constraintStart_toEndOf="@+id/cardView4"-->
-                        <!--                            app:layout_constraintTop_toBottomOf="@+id/materialTextView">-->
-
-                        <!--                            <com.google.android.material.textview.MaterialTextView-->
-                        <!--                                android:layout_width="wrap_content"-->
-                        <!--                                android:layout_height="wrap_content"-->
-                        <!--                                android:fontFamily="sans-serif-medium"-->
-                        <!--                                android:paddingHorizontal="10dp"-->
-                        <!--                                android:paddingVertical="5dp"-->
-                        <!--                                android:text="Платный Wi-Fi в фойе"-->
-                        <!--                                android:textColor="#828796"-->
-                        <!--                                android:textSize="16sp" />-->
-                        <!--                        </androidx.cardview.widget.CardView>-->
-
-                        <!--                        <androidx.cardview.widget.CardView-->
-                        <!--                            android:id="@+id/cardView5"-->
-                        <!--                            android:layout_width="wrap_content"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:layout_marginStart="16dp"-->
-                        <!--                            android:layout_marginTop="8dp"-->
-                        <!--                            app:cardBackgroundColor="#FBFBFC"-->
-                        <!--                            app:cardCornerRadius="5dp"-->
-                        <!--                            app:cardElevation="0dp"-->
-                        <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                        <!--                            app:layout_constraintTop_toBottomOf="@+id/cardView4">-->
-
-                        <!--                            <com.google.android.material.textview.MaterialTextView-->
-                        <!--                                android:layout_width="wrap_content"-->
-                        <!--                                android:layout_height="wrap_content"-->
-                        <!--                                android:fontFamily="sans-serif-medium"-->
-                        <!--                                android:paddingHorizontal="10dp"-->
-                        <!--                                android:paddingVertical="5dp"-->
-                        <!--                                android:text="30 км до аэропорта"-->
-                        <!--                                android:textColor="#828796"-->
-                        <!--                                android:textSize="16sp" />-->
-                        <!--                        </androidx.cardview.widget.CardView>-->
-
-                        <!--                        <androidx.cardview.widget.CardView-->
-                        <!--                            android:layout_width="wrap_content"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:layout_marginStart="8dp"-->
-                        <!--                            android:layout_marginTop="8dp"-->
-                        <!--                            app:cardBackgroundColor="#FBFBFC"-->
-                        <!--                            app:cardCornerRadius="5dp"-->
-                        <!--                            app:cardElevation="0dp"-->
-                        <!--                            app:layout_constraintStart_toEndOf="@+id/cardView5"-->
-                        <!--                            app:layout_constraintTop_toBottomOf="@+id/cardView4">-->
-                        <!--                            <com.google.android.material.textview.MaterialTextView-->
-                        <!--                                android:layout_width="wrap_content"-->
-                        <!--                                android:layout_height="wrap_content"-->
-                        <!--                                android:fontFamily="sans-serif-medium"-->
-                        <!--                                android:paddingHorizontal="10dp"-->
-                        <!--                                android:paddingVertical="5dp"-->
-                        <!--                                android:text="1 км до пляжа"-->
-                        <!--                                android:textColor="#828796"-->
-                        <!--                                android:textSize="16sp" />-->
-                        <!--                        </androidx.cardview.widget.CardView>-->
                     </com.google.android.flexbox.FlexboxLayout>
 
 
@@ -562,7 +475,7 @@
                 android:elevation="0dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="0dp"
-                app:cardElevation="6dp"
+                app:cardElevation="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView5"

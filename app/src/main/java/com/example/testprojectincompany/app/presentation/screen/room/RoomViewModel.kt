@@ -1,4 +1,4 @@
-package com.example.testprojectincompany.app.presentation.screen.hotel
+package com.example.testprojectincompany.app.presentation.screen.room
 
 import android.app.Application
 import android.content.Context
@@ -8,19 +8,17 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.testprojectincompany.data.remoteDataSource.model.HotelModel
-import com.example.testprojectincompany.domain.useCase.GetHotelDataUseCase
+import com.example.testprojectincompany.data.remoteDataSource.model.RoomModel
+import com.example.testprojectincompany.domain.useCase.GetRoomDataUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class HotelViewModel(
-    private val context: Application,
-    private val getHotelDataUseCase: GetHotelDataUseCase,
-) : AndroidViewModel(context) {
+class RoomViewModel(private val context: Application, private val getRoomDataUseCase: GetRoomDataUseCase) :
+    AndroidViewModel(context) {
 
-    private val _hotelLiveData: MutableLiveData<Response<HotelModel>> = MutableLiveData()
-    var hotelLiveData: LiveData<Response<HotelModel>> = _hotelLiveData
+    private val _roomLiveData: MutableLiveData<Response<RoomModel>> = MutableLiveData()
+    var roomLiveData: LiveData<Response<RoomModel>> = _roomLiveData
 
     private val _errorLiveData: MutableLiveData<String> = MutableLiveData()
     var errorLiveData: LiveData<String> = _errorLiveData
@@ -33,10 +31,10 @@ class HotelViewModel(
             }
         }
 
-    fun getHotelData() {
+    fun getRoomsData() {
         if (isOnline(context)) {
             viewModelScope.launch(coroutineExceptionHandler) {
-                _hotelLiveData.value = getHotelDataUseCase.execute()
+                _roomLiveData.value = getRoomDataUseCase.execute()
             }
         } else {
             _errorLiveData.value = "Out of connection"
