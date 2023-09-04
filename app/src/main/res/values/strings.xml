@@ -12,4 +12,6 @@
     <string name="to_choose_room">К выбору номера</string>
     <string name="about_hotel">Об отеле</string>
     <string name="to_order_room">Выбрать номер</string>
+    <string name="booking">Бронирование</string>
+    <string name="flight_from">Вылет из</string>
 </resources>

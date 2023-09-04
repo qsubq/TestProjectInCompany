@@ -47,11 +47,13 @@ class RoomFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnBack.setOnClickListener {
-            this.findNavController().navigate(R.id.action_roomFragment_to_hotelFragment)
+        with(binding) {
+            btnBack.setOnClickListener {
+                findNavController().navigate(R.id.action_roomFragment_to_hotelFragment)
+            }
+            tvHotelName.text = nameOfHotel
+            rvRooms.adapter = roomsRecyclerViewAdapter
         }
-        binding.tvHotelName.text = nameOfHotel
-        binding.rvRooms.adapter = roomsRecyclerViewAdapter
 
         viewModel.roomLiveData.observe(viewLifecycleOwner) { response ->
             binding.progressBar.visibility = View.GONE

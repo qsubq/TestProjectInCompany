@@ -8,7 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.testprojectincompany.data.remoteDataSource.model.RoomModel
+import com.example.testprojectincompany.data.remoteDataSource.model.room.RoomModel
 import com.example.testprojectincompany.domain.useCase.GetRoomDataUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch

@@ -2,13 +2,14 @@ package com.example.testprojectincompany.app.presentation.screen.room
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.testprojectincompany.R
 import com.example.testprojectincompany.app.presentation.screen.hotel.CloudCardViewItem
 import com.example.testprojectincompany.app.presentation.screen.hotel.HotelViewPagerAdapter
-import com.example.testprojectincompany.data.remoteDataSource.model.Room
+import com.example.testprojectincompany.data.remoteDataSource.model.room.Room
 import com.example.testprojectincompany.databinding.RoomRecyclerViewLayoutBinding
 import com.example.testprojectincompany.utils.splitAtIndex
 
@@ -44,6 +45,11 @@ class RoomsRecyclerViewAdapter() :
 
             btnDetails.setOnClickListener {
                 // Ничего не происходит
+            }
+
+            btnRoomChoose.setOnClickListener {
+                holder.itemView.findNavController()
+                    .navigate(R.id.action_roomFragment_to_bookingFragment)
             }
 
             // Пробел в шестизначных цифрах
