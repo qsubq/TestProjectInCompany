@@ -4,16 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.testprojectincompany.databinding.HotelViewPagerItemBinding
+import com.example.testprojectincompany.databinding.HotelViewPagerItemLayoutBinding
 
 class HotelViewPagerAdapter(private val listOfImages: List<String>) :
     RecyclerView.Adapter<HotelViewPagerAdapter.HotelViewHolder>() {
-    class HotelViewHolder(val binding: HotelViewPagerItemBinding) :
+    class HotelViewHolder(val binding: HotelViewPagerItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HotelViewHolder {
         val binding =
-            HotelViewPagerItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            HotelViewPagerItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return HotelViewHolder(binding)
     }
 

@@ -1,17 +1,31 @@
 <resources>
     <string name="app_name">TestProjectInCompany</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hotel">Отель</string>
-
     <string name="rate_hotel">%1$s %2$s</string>
     <string name="price_for_two">от %1$s %2$s ₽</string>
     <string name="price">от %1$s ₽</string>
     <string name="price_without_from">%1$s ₽</string>
-    <string name="price_for_two_without_from">%1$s %2$s  ₽</string>
+    <string name="price_for_two_without_from">%1$s %2$s ₽</string>
+    <string name="btn_to_pay">Оплатить %1$s ₽</string>
+    <string name="btn_to_pay_for_two">Оплатить %1$s %2$s ₽</string>
     <string name="to_choose_room">К выбору номера</string>
     <string name="about_hotel">Об отеле</string>
     <string name="to_order_room">Выбрать номер</string>
     <string name="booking">Бронирование</string>
     <string name="flight_from">Вылет из</string>
+    <string name="country_city">Страна, город</string>
+    <string name="date">Даты</string>
+    <string name="amount_of_nights">Кол-во ночей</string>
+    <string name="room">Номер</string>
+    <string name="nutrition">Питание</string>
+    <string name="about_client">Информация о покупателе</string>
+    <string name="tour">Тур</string>
+    <string name="gas_price">Топливный сбор</string>
+    <string name="order_success">Заказ оплачен</string>
+    <string name="your_order_has_been_taken">Ваш заказ принят в работу</string>
+    <string name="tour_dates">%1$s – %2$s</string>
+    <string name="amount_of_nights_when_5">%1$s ночей</string>
+    <string name="amount_of_nights_when_2">%1$s ночи</string>
+    <string name="order_confirmation">Подтверждение заказа №%1$s может\nзанять некоторое время (от 1 часа до суток).\nКак только мы получим ответ от\nтуроператора, вам на почту придет\nуведомление.</string>
 </resources>

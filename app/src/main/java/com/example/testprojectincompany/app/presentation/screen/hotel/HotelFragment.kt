@@ -65,7 +65,7 @@ class HotelFragment : Fragment() {
                         // Пробел в шестизначных цифрах
                         if (it.minimal_price.toString().length >= 6) {
                             val priceString = it.minimal_price.toString()
-                                .splitAtIndex(it.minimal_price.toString().length / 2)
+                                .splitAtIndex(it.minimal_price.toString().lastIndex - 2)
 
                             tvPrice.text =
                                 requireContext().getString(

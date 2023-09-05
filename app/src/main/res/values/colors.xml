@@ -7,4 +7,6 @@
     <color name="yellow">#FFEB3B</color>
     <color name="grey_100">#C3C2BE</color>
     <color name="grey_200">#828796</color>
+    <color name="grey_300">#F6F6F9</color>
+    <color name="error_red">#EB5757</color>
 </resources>

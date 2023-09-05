@@ -55,11 +55,11 @@ class RoomsRecyclerViewAdapter() :
             // Пробел в шестизначных цифрах
             if (item.price.toString().length >= 6) {
                 val priceString = item.price.toString()
-                    .splitAtIndex(item.price.toString().length / 2)
+                    .splitAtIndex(item.price.toString().lastIndex - 2)
 
                 tvPrice.text =
                     holder.itemView.context.getString(
-                        R.string.price_for_two,
+                        R.string.price_for_two_without_from,
                         priceString.first,
                         priceString.second,
                     )

@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.example.testprojectincompany"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.testprojectincompany"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -39,13 +39,30 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true
     }
     kapt {
         correctErrorTypes = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.1"
+    }
 }
 
 dependencies {
+    implementation("androidx.compose.ui:ui-android:1.5.0")
+    // Jetpack Compose
+    platform("androidx.compose:compose-bom:2022.10.00")
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+    platform("org.jetbrains.kotlin:kotlin-bom:1.8.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
+    implementation("androidx.compose.runtime:runtime-livedata:1.4.3")
+    implementation("androidx.activity:activity-compose:1.5.1")
+
     // Dagger 2
     implementation("com.google.dagger:dagger:2.43.2")
     kapt("com.google.dagger:dagger-compiler:2.43.2")
