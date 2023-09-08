@@ -61,3 +61,5 @@ oapp/src/main/java/com/example/testprojectincompany/app/presentation/screen/orde
 kapp/src/main/java/com/example/testprojectincompany/app/presentation/screen/room/RoomsRecyclerViewAdapter.kt,6\5\65e62ec5ce16c4d2039dba40552dc6bfeb0a233c
 ‘
 aapp/src/main/java/com/example/testprojectincompany/app/presentation/screen/hotel/HotelFragment.kt,d\d\dd2bbc682438ae660973f7fa90534f834a034b24
+˜
+happ/src/main/java/com/example/testprojectincompany/app/presentation/screen/booking/PhoneFieldWithMask.kt,4\9\49c77de5afb5636e22745badbec4c36210f31797

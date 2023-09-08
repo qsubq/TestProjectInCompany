@@ -6,16 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,6 +38,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
@@ -74,9 +80,29 @@ class BookingFragment : Fragment() {
 
         val numberTextState = mutableStateOf("")
         val emailTextState = mutableStateOf("")
+        val nameTextState = mutableStateOf("")
+        val secondNameTextState = mutableStateOf("")
+        val dateTextState = mutableStateOf("")
+        val citizensTextState = mutableStateOf("")
+        val numberPassTextState = mutableStateOf("")
+        val periodPassTextState = mutableStateOf("")
 
         val numberErrorState = mutableStateOf(false)
         val emailErrorState = mutableStateOf(false)
+        val nameErrorState = mutableStateOf(false)
+        val secondNameErrorState = mutableStateOf(false)
+        val dateErrorState = mutableStateOf(false)
+        val citizensErrorState = mutableStateOf(false)
+        val numberPassErrorState = mutableStateOf(false)
+        val periodPassErrorState = mutableStateOf(false)
+
+        val tourTextState = mutableStateOf("")
+        val gasTextState = mutableStateOf("")
+        val serviceTextState = mutableStateOf("")
+        val finalPriceTextState = mutableStateOf("")
+        val btnMakeOrderTextState = mutableStateOf("")
+
+        val listOfTourists: List<TouristModel>
 
         binding.composeViewEditText.setContent {
             Column(modifier = Modifier.fillMaxSize()) {
@@ -105,7 +131,7 @@ class BookingFragment : Fragment() {
                             .matcher(emailTextState.value)
                             .matches()
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     singleLine = true,
                     textStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
                     isError = emailErrorState.value,
@@ -138,11 +164,12 @@ class BookingFragment : Fragment() {
         }
 
         binding.composeViewLazyColumn.setContent {
-            Column(modifier = Modifier.fillMaxWidth()) {
-                LazyColumn {
+            Column(
+                modifier = Modifier.fillMaxWidth().scrollable(ScrollState(0), Orientation.Vertical),
+            ) {
+                LazyColumn() {
                     items(2) {
                         val isCollapsedState = remember { mutableStateOf(false) }
-                        val nameTextState = remember { mutableStateOf("") }
 
                         Card(
                             modifier = Modifier.padding(bottom = 8.dp),
@@ -191,6 +218,7 @@ class BookingFragment : Fragment() {
                                     value = nameTextState.value,
                                     onValueChange = { it ->
                                         nameTextState.value = it
+                                        nameErrorState.value = it.isEmpty()
                                     },
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                                     singleLine = true,
@@ -207,6 +235,7 @@ class BookingFragment : Fragment() {
                                         focusedIndicatorColor = Color.Transparent,
                                         unfocusedIndicatorColor = Color.Transparent,
                                         disabledIndicatorColor = Color.Transparent,
+                                        errorIndicatorColor = colorResource(id = R.color.error_red),
                                     ),
                                     shape = RoundedCornerShape(size = 10.dp),
                                 )
@@ -218,7 +247,8 @@ class BookingFragment : Fragment() {
                                         .fillMaxWidth(),
                                     value = nameTextState.value,
                                     onValueChange = { it ->
-                                        nameTextState.value = it
+                                        secondNameTextState.value = it
+                                        secondNameErrorState.value = it.isEmpty()
                                     },
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                                     singleLine = true,
@@ -235,6 +265,7 @@ class BookingFragment : Fragment() {
                                         focusedIndicatorColor = Color.Transparent,
                                         unfocusedIndicatorColor = Color.Transparent,
                                         disabledIndicatorColor = Color.Transparent,
+                                        errorIndicatorColor = colorResource(id = R.color.error_red),
                                     ),
                                     shape = RoundedCornerShape(size = 10.dp),
                                 )
@@ -245,7 +276,8 @@ class BookingFragment : Fragment() {
                                         .fillMaxWidth(),
                                     value = nameTextState.value,
                                     onValueChange = { it ->
-                                        nameTextState.value = it
+                                        dateTextState.value = it
+                                        dateErrorState.value = it.isEmpty()
                                     },
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                                     singleLine = true,
@@ -262,6 +294,7 @@ class BookingFragment : Fragment() {
                                         focusedIndicatorColor = Color.Transparent,
                                         unfocusedIndicatorColor = Color.Transparent,
                                         disabledIndicatorColor = Color.Transparent,
+                                        errorIndicatorColor = colorResource(id = R.color.error_red),
                                     ),
                                     shape = RoundedCornerShape(size = 10.dp),
                                 )
@@ -272,7 +305,8 @@ class BookingFragment : Fragment() {
                                         .fillMaxWidth(),
                                     value = nameTextState.value,
                                     onValueChange = { it ->
-                                        nameTextState.value = it
+                                        citizensTextState.value = it
+                                        citizensErrorState.value = it.isEmpty()
                                     },
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                                     singleLine = true,
@@ -289,6 +323,7 @@ class BookingFragment : Fragment() {
                                         focusedIndicatorColor = Color.Transparent,
                                         unfocusedIndicatorColor = Color.Transparent,
                                         disabledIndicatorColor = Color.Transparent,
+                                        errorIndicatorColor = colorResource(id = R.color.error_red),
                                     ),
                                     shape = RoundedCornerShape(size = 10.dp),
                                 )
@@ -299,7 +334,8 @@ class BookingFragment : Fragment() {
                                         .fillMaxWidth(),
                                     value = nameTextState.value,
                                     onValueChange = { it ->
-                                        nameTextState.value = it
+                                        numberPassTextState.value = it
+                                        numberPassErrorState.value = it.isEmpty()
                                     },
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                                     singleLine = true,
@@ -316,6 +352,7 @@ class BookingFragment : Fragment() {
                                         focusedIndicatorColor = Color.Transparent,
                                         unfocusedIndicatorColor = Color.Transparent,
                                         disabledIndicatorColor = Color.Transparent,
+                                        errorIndicatorColor = colorResource(id = R.color.error_red),
                                     ),
                                     shape = RoundedCornerShape(size = 10.dp),
                                 )
@@ -331,7 +368,8 @@ class BookingFragment : Fragment() {
                                         .fillMaxWidth(),
                                     value = nameTextState.value,
                                     onValueChange = { it ->
-                                        nameTextState.value = it
+                                        periodPassTextState.value = it
+                                        periodPassErrorState.value = it.isEmpty()
                                     },
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                                     singleLine = true,
@@ -348,6 +386,7 @@ class BookingFragment : Fragment() {
                                         focusedIndicatorColor = Color.Transparent,
                                         unfocusedIndicatorColor = Color.Transparent,
                                         disabledIndicatorColor = Color.Transparent,
+                                        errorIndicatorColor = colorResource(id = R.color.error_red),
                                     ),
                                     shape = RoundedCornerShape(size = 10.dp),
                                 )
@@ -381,6 +420,163 @@ class BookingFragment : Fragment() {
                             imageVector = ImageVector.vectorResource(id = R.drawable.plus_btn_icon),
                             contentDescription = null,
                         )
+                    }
+                }
+
+                Card(
+                    modifier = Modifier.padding(top = 8.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                ) {
+                    Column {
+                        Box(
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                        ) {
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterStart),
+                                text = "Тур",
+                                color = colorResource(id = R.color.grey_200),
+                                fontSize = 16.sp,
+                                style = TextStyle(
+                                    lineHeight = 19.2.sp,
+                                    fontWeight = FontWeight(400),
+                                ),
+                            )
+
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterEnd).width(132.dp),
+                                text = tourTextState.value,
+                                color = Color.Black,
+                                fontSize = 16.sp,
+                                style = TextStyle(
+                                    lineHeight = 19.2.sp,
+                                    fontWeight = FontWeight(400),
+                                ),
+                                textAlign = TextAlign.End,
+                            )
+                        }
+                        Box(
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                        ) {
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterStart),
+                                text = "Топливный сбор",
+                                color = colorResource(id = R.color.grey_200),
+                                fontSize = 16.sp,
+                                style = TextStyle(
+                                    lineHeight = 19.2.sp,
+                                    fontWeight = FontWeight(400),
+                                ),
+                            )
+
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterEnd).width(132.dp),
+                                text = gasTextState.value,
+                                color = Color.Black,
+                                fontSize = 16.sp,
+                                style = TextStyle(
+                                    lineHeight = 19.2.sp,
+                                    fontWeight = FontWeight(400),
+                                ),
+                                textAlign = TextAlign.End,
+                            )
+                        }
+                        Box(
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                        ) {
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterStart),
+                                text = "Сервисный сбор",
+                                color = colorResource(id = R.color.grey_200),
+                                fontSize = 16.sp,
+                                style = TextStyle(
+                                    lineHeight = 19.2.sp,
+                                    fontWeight = FontWeight(400),
+                                ),
+                            )
+
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterEnd).width(132.dp),
+                                text = serviceTextState.value,
+                                color = Color.Black,
+                                fontSize = 16.sp,
+                                style = TextStyle(
+                                    lineHeight = 19.2.sp,
+                                    fontWeight = FontWeight(400),
+                                ),
+                                textAlign = TextAlign.End,
+                            )
+                        }
+                        Box(
+                            modifier = Modifier.fillMaxWidth()
+                                .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 16.dp),
+                        ) {
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterStart),
+                                text = "К оплате",
+                                color = colorResource(id = R.color.grey_200),
+                                fontSize = 16.sp,
+                                style = TextStyle(
+                                    lineHeight = 19.2.sp,
+                                    fontWeight = FontWeight(400),
+                                ),
+                            )
+
+                            Text(
+                                modifier = Modifier.align(Alignment.CenterEnd).width(132.dp),
+                                text = finalPriceTextState.value,
+                                color = Color(0xFF0D72FF),
+                                fontSize = 16.sp,
+                                style = TextStyle(
+                                    lineHeight = 19.2.sp,
+                                    fontWeight = FontWeight(600),
+                                ),
+                                textAlign = TextAlign.End,
+                            )
+                        }
+                    }
+                }
+                Card(
+                    modifier = Modifier.padding(top = 8.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 13.dp, start = 16.dp, end = 16.dp, bottom = 13.dp),
+                    ) {
+                        Button(
+                            modifier = Modifier.align(Alignment.Center)
+                                .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 20.dp),
+                            onClick = {
+                                if (emailTextState.value.isEmpty() && numberTextState.value.isEmpty()) {
+                                    if (emailTextState.value.isEmpty()) {
+                                        emailErrorState.value = true
+                                    }
+                                    if (numberTextState.value.isEmpty()) {
+                                        numberErrorState.value = true
+                                    }
+                                }
+                                if (!emailErrorState.value && !numberErrorState.value) {
+                                    findNavController().navigate(R.id.action_bookingFragment_to_orderSuccessFragment)
+                                }
+                            },
+                        ) {
+                            Text(
+                                text = btnMakeOrderTextState.value,
+                                color = Color.Black,
+                                fontSize = 16.sp,
+                                style = TextStyle(
+                                    lineHeight = 17.6.sp,
+                                    fontWeight = FontWeight(500),
+                                ),
+                                textAlign = TextAlign.End,
+                            )
+                        }
                     }
                 }
             }
@@ -431,14 +627,14 @@ class BookingFragment : Fragment() {
                             val priceString = it.tour_price.toString()
                                 .splitAtIndex(it.tour_price.toString().lastIndex - 2)
 
-                            tvTourPrice.text =
+                            tourTextState.value =
                                 requireContext().getString(
                                     R.string.price_for_two_without_from,
                                     priceString.first,
                                     priceString.second,
                                 )
                         } else {
-                            tvTourPrice.text =
+                            tourTextState.value =
                                 requireContext().getString(
                                     R.string.price,
                                     it.tour_price.toString(),
@@ -449,14 +645,14 @@ class BookingFragment : Fragment() {
                             val priceString = it.fuel_charge.toString()
                                 .splitAtIndex(it.fuel_charge.toString().lastIndex - 2)
 
-                            tvGasPrice.text =
+                            gasTextState.value =
                                 requireContext().getString(
                                     R.string.price_for_two_without_from,
                                     priceString.first,
                                     priceString.second,
                                 )
                         } else {
-                            tvGasPrice.text =
+                            gasTextState.value =
                                 requireContext().getString(
                                     R.string.price,
                                     it.fuel_charge.toString(),
@@ -467,14 +663,14 @@ class BookingFragment : Fragment() {
                             val priceString = it.service_charge.toString()
                                 .splitAtIndex(it.service_charge.toString().lastIndex - 2)
 
-                            tvServicePrice.text =
+                            serviceTextState.value =
                                 requireContext().getString(
                                     R.string.price_for_two_without_from,
                                     priceString.first,
                                     priceString.second,
                                 )
                         } else {
-                            tvServicePrice.text =
+                            serviceTextState.value =
                                 requireContext().getString(
                                     R.string.price,
                                     it.service_charge.toString(),
@@ -487,24 +683,24 @@ class BookingFragment : Fragment() {
                             val priceString = finalPrice.toString()
                                 .splitAtIndex(finalPrice.toString().lastIndex - 2)
 
-                            tvToPayPrice.text =
+                            finalPriceTextState.value =
                                 requireContext().getString(
                                     R.string.price_for_two_without_from,
                                     priceString.first,
                                     priceString.second,
                                 )
-                            binding.btnMakeOrder.text = requireContext().getString(
+                            btnMakeOrderTextState.value = requireContext().getString(
                                 R.string.btn_to_pay_for_two,
                                 priceString.first,
                                 priceString.second,
                             )
                         } else {
-                            tvToPayPrice.text =
+                            finalPriceTextState.value =
                                 requireContext().getString(
                                     R.string.price,
                                     finalPrice.toString(),
                                 )
-                            binding.btnMakeOrder.text = requireContext().getString(
+                            btnMakeOrderTextState.value = requireContext().getString(
                                 R.string.btn_to_pay,
                                 finalPrice.toString(),
                             )
@@ -529,18 +725,8 @@ class BookingFragment : Fragment() {
 
         getBookingData()
 
-        binding.btnMakeOrder.setOnClickListener {
-            if (emailTextState.value.isEmpty() && numberTextState.value.isEmpty()) {
-                if (emailTextState.value.isEmpty()) {
-                    emailErrorState.value = true
-                }
-                if (numberTextState.value.isEmpty()) {
-                    numberErrorState.value = true
-                }
-            }
-            if (!emailErrorState.value && !numberErrorState.value) {
-                findNavController().navigate(R.id.action_bookingFragment_to_orderSuccessFragment)
-            }
+        binding.btnBack.setOnClickListener {
+            findNavController().navigate(R.id.action_bookingFragment_to_roomFragment)
         }
     }
 
