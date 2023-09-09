@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.verticalScroll
@@ -14,6 +15,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -89,9 +91,10 @@ class BookingFragment : Fragment() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .verticalScroll(state = ScrollState(0)),
+                    .verticalScroll(state = ScrollState(0))
+                    .background(Color(0xFFF6F6F9)),
             ) {
-                ToolBar()
+                ToolBar(findNavController())
                 if (bookingLiveData.value?.code() == 200) {
                     bookingLiveData.value?.body()?.let {
                         DescriptionBlock(

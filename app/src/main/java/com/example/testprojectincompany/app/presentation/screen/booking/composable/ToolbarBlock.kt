@@ -1,6 +1,7 @@
 package com.example.testprojectincompany.app.presentation.screen.booking.composable
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,11 +21,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.testprojectincompany.R
 
 @Preview
 @Composable
-fun ToolBar() {
+fun ToolBar(navController: NavController) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(0.dp),
@@ -38,7 +40,10 @@ fun ToolBar() {
             Image(
                 modifier = Modifier
                     .align(Alignment.CenterStart)
-                    .padding(start = 16.dp, top = 14.dp),
+                    .padding(start = 16.dp, top = 14.dp)
+                    .clickable {
+                        navController.navigate(R.id.action_bookingFragment_to_roomFragment)
+                    },
                 imageVector = ImageVector.vectorResource(id = R.drawable.arrow_to_the_leftsvg),
                 contentDescription = null,
             )
