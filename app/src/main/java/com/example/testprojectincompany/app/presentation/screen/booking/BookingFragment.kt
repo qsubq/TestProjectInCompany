@@ -1,52 +1,33 @@
 package com.example.testprojectincompany.app.presentation.screen.booking
 
 import android.os.Bundle
-import android.util.Patterns
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.testprojectincompany.R
 import com.example.testprojectincompany.app.di.DaggerAppComponent
 import com.example.testprojectincompany.app.presentation.dialog.ErrorDialog
+import com.example.testprojectincompany.app.presentation.screen.booking.composable.AboutClientBlock
+import com.example.testprojectincompany.app.presentation.screen.booking.composable.ButtonBlock
+import com.example.testprojectincompany.app.presentation.screen.booking.composable.DescriptionBlock
+import com.example.testprojectincompany.app.presentation.screen.booking.composable.DetailsDescriptionBlock
+import com.example.testprojectincompany.app.presentation.screen.booking.composable.ListOfTouristsBlock
+import com.example.testprojectincompany.app.presentation.screen.booking.composable.PriceBlock
+import com.example.testprojectincompany.app.presentation.screen.booking.composable.ToolBar
 import com.example.testprojectincompany.databinding.FragmentBookingBinding
 import com.example.testprojectincompany.utils.splitAtIndex
 import javax.inject.Inject
@@ -74,664 +55,193 @@ class BookingFragment : Fragment() {
         return binding.root
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val numberTextState = mutableStateOf("")
-        val emailTextState = mutableStateOf("")
-        val nameTextState = mutableStateOf("")
-        val secondNameTextState = mutableStateOf("")
-        val dateTextState = mutableStateOf("")
-        val citizensTextState = mutableStateOf("")
-        val numberPassTextState = mutableStateOf("")
-        val periodPassTextState = mutableStateOf("")
-
-        val numberErrorState = mutableStateOf(false)
-        val emailErrorState = mutableStateOf(false)
-        val nameErrorState = mutableStateOf(false)
-        val secondNameErrorState = mutableStateOf(false)
-        val dateErrorState = mutableStateOf(false)
-        val citizensErrorState = mutableStateOf(false)
-        val numberPassErrorState = mutableStateOf(false)
-        val periodPassErrorState = mutableStateOf(false)
-
-        val tourTextState = mutableStateOf("")
-        val gasTextState = mutableStateOf("")
-        val serviceTextState = mutableStateOf("")
-        val finalPriceTextState = mutableStateOf("")
-        val btnMakeOrderTextState = mutableStateOf("")
-
-        val listOfTourists: List<TouristModel>
-
         binding.composeViewEditText.setContent {
-            Column(modifier = Modifier.fillMaxSize()) {
-                PhoneField(
-                    phone = numberTextState.value,
-                    errorState = numberErrorState,
-                    mask = "+7 (***) ***-**-**",
-                    maskNumber = '*',
-                    onPhoneChanged = { numberTextState.value = it },
-                )
+            SideEffect {
+                Log.e("Booking", "SideEffect")
+            }
 
-                TextField(
-                    modifier = Modifier
-                        .border(width = 0.dp, color = Color.White)
-                        .padding(top = 8.dp, bottom = 8.dp)
-                        .fillMaxWidth(),
-                    value = emailTextState.value,
-                    onValueChange = { it ->
-                        if (it.isNotEmpty()) {
-                            emailErrorState.value = false
-                        }
+            val bookingLiveData = viewModel.bookingLiveData.observeAsState()
 
-                        emailTextState.value = it
+            val numberTextState = remember { mutableStateOf("") }
+            val emailTextState = remember { mutableStateOf("") }
+            val numberErrorState = remember { mutableStateOf(false) }
+            val emailErrorState = remember { mutableStateOf(false) }
 
-                        emailErrorState.value = !Patterns.EMAIL_ADDRESS
-                            .matcher(emailTextState.value)
-                            .matches()
-                    },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    singleLine = true,
-                    textStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
-                    isError = emailErrorState.value,
-                    placeholder = {
-                        Text("examplemail.000@mail.ru", color = Color(0xFF14142B), fontSize = 16.sp)
-                    },
-                    label = {
-                        Text(text = "Почта", color = Color(0xFFA9ABB7), fontSize = 17.sp)
-                    },
-                    colors = TextFieldDefaults.textFieldColors(
-                        containerColor = Color(0xFFF6F6F9),
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent,
-                        errorIndicatorColor = colorResource(id = R.color.error_red),
+            // Лист туристов
+            val listOfTourists = remember {
+                mutableStateOf(
+                    mutableListOf(
+                        TouristModel(
+                            position = 0,
+                        ),
+
+                        TouristModel(
+                            position = 1,
+                        ),
                     ),
-                    shape = RoundedCornerShape(size = 10.dp),
-                )
-
-                Text(
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    text = "Эти данные никому не передаются. После оплаты мы\nвышли чек на указанный вами номер и почту",
-                    color = colorResource(
-                        id = R.color.grey_200,
-                    ),
-                    fontSize = 14.sp,
-                    style = TextStyle(lineHeight = 16.8.sp),
                 )
             }
-        }
 
-        binding.composeViewLazyColumn.setContent {
             Column(
-                modifier = Modifier.fillMaxWidth().scrollable(ScrollState(0), Orientation.Vertical),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(state = ScrollState(0)),
             ) {
-                LazyColumn() {
-                    items(2) {
-                        val isCollapsedState = remember { mutableStateOf(false) }
-
-                        Card(
-                            modifier = Modifier.padding(bottom = 8.dp),
-                            shape = RoundedCornerShape(12.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        top = 13.dp,
-                                        start = 16.dp,
-                                        end = 16.dp,
-                                        bottom = 13.dp,
-                                    ),
-                            ) {
-                                Text(
-                                    text = "Первый турист",
-                                    fontSize = 22.sp,
-                                    color = Color.Black,
-                                    style = TextStyle(lineHeight = 26.4.sp),
-                                    fontWeight = FontWeight.Medium,
-                                )
-                                Image(
-                                    modifier = Modifier
-                                        .align(Alignment.CenterEnd)
-                                        .padding(top = 3.dp)
-                                        .clickable {
-                                            isCollapsedState.value = !isCollapsedState.value
-                                        },
-                                    imageVector = if (isCollapsedState.value) {
-                                        ImageVector.vectorResource(id = R.drawable.arrow_to_the_downsvg)
-                                    } else {
-                                        ImageVector.vectorResource(id = R.drawable.arrow_to_the_up)
-                                    },
-                                    contentDescription = null,
-                                )
-                            }
-
-                            if (!isCollapsedState.value) {
-                                TextField(
-                                    modifier = Modifier
-                                        .border(width = 0.dp, color = Color.White)
-                                        .padding(top = 3.dp, start = 16.dp, end = 16.dp)
-                                        .fillMaxWidth(),
-                                    value = nameTextState.value,
-                                    onValueChange = { it ->
-                                        nameTextState.value = it
-                                        nameErrorState.value = it.isEmpty()
-                                    },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                                    singleLine = true,
-                                    textStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
-                                    label = {
-                                        Text(
-                                            text = "Имя",
-                                            color = Color(0xFFA9ABB7),
-                                            fontSize = 17.sp,
-                                        )
-                                    },
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        containerColor = Color(0xFFF6F6F9),
-                                        focusedIndicatorColor = Color.Transparent,
-                                        unfocusedIndicatorColor = Color.Transparent,
-                                        disabledIndicatorColor = Color.Transparent,
-                                        errorIndicatorColor = colorResource(id = R.color.error_red),
-                                    ),
-                                    shape = RoundedCornerShape(size = 10.dp),
-                                )
-
-                                TextField(
-                                    modifier = Modifier
-                                        .border(width = 0.dp, color = Color.White)
-                                        .padding(top = 8.dp, start = 16.dp, end = 16.dp)
-                                        .fillMaxWidth(),
-                                    value = nameTextState.value,
-                                    onValueChange = { it ->
-                                        secondNameTextState.value = it
-                                        secondNameErrorState.value = it.isEmpty()
-                                    },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                                    singleLine = true,
-                                    textStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
-                                    label = {
-                                        Text(
-                                            text = "Фамилия",
-                                            color = Color(0xFFA9ABB7),
-                                            fontSize = 17.sp,
-                                        )
-                                    },
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        containerColor = Color(0xFFF6F6F9),
-                                        focusedIndicatorColor = Color.Transparent,
-                                        unfocusedIndicatorColor = Color.Transparent,
-                                        disabledIndicatorColor = Color.Transparent,
-                                        errorIndicatorColor = colorResource(id = R.color.error_red),
-                                    ),
-                                    shape = RoundedCornerShape(size = 10.dp),
-                                )
-                                TextField(
-                                    modifier = Modifier
-                                        .border(width = 0.dp, color = Color.White)
-                                        .padding(top = 8.dp, start = 16.dp, end = 16.dp)
-                                        .fillMaxWidth(),
-                                    value = nameTextState.value,
-                                    onValueChange = { it ->
-                                        dateTextState.value = it
-                                        dateErrorState.value = it.isEmpty()
-                                    },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                                    singleLine = true,
-                                    textStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
-                                    label = {
-                                        Text(
-                                            text = "Дата рождения",
-                                            color = Color(0xFFA9ABB7),
-                                            fontSize = 17.sp,
-                                        )
-                                    },
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        containerColor = Color(0xFFF6F6F9),
-                                        focusedIndicatorColor = Color.Transparent,
-                                        unfocusedIndicatorColor = Color.Transparent,
-                                        disabledIndicatorColor = Color.Transparent,
-                                        errorIndicatorColor = colorResource(id = R.color.error_red),
-                                    ),
-                                    shape = RoundedCornerShape(size = 10.dp),
-                                )
-                                TextField(
-                                    modifier = Modifier
-                                        .border(width = 0.dp, color = Color.White)
-                                        .padding(top = 8.dp, start = 16.dp, end = 16.dp)
-                                        .fillMaxWidth(),
-                                    value = nameTextState.value,
-                                    onValueChange = { it ->
-                                        citizensTextState.value = it
-                                        citizensErrorState.value = it.isEmpty()
-                                    },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                                    singleLine = true,
-                                    textStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
-                                    label = {
-                                        Text(
-                                            text = "Гражданство",
-                                            color = Color(0xFFA9ABB7),
-                                            fontSize = 17.sp,
-                                        )
-                                    },
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        containerColor = Color(0xFFF6F6F9),
-                                        focusedIndicatorColor = Color.Transparent,
-                                        unfocusedIndicatorColor = Color.Transparent,
-                                        disabledIndicatorColor = Color.Transparent,
-                                        errorIndicatorColor = colorResource(id = R.color.error_red),
-                                    ),
-                                    shape = RoundedCornerShape(size = 10.dp),
-                                )
-                                TextField(
-                                    modifier = Modifier
-                                        .border(width = 0.dp, color = Color.White)
-                                        .padding(top = 8.dp, start = 16.dp, end = 16.dp)
-                                        .fillMaxWidth(),
-                                    value = nameTextState.value,
-                                    onValueChange = { it ->
-                                        numberPassTextState.value = it
-                                        numberPassErrorState.value = it.isEmpty()
-                                    },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                                    singleLine = true,
-                                    textStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
-                                    label = {
-                                        Text(
-                                            text = "Номер загранпаспорта",
-                                            color = Color(0xFFA9ABB7),
-                                            fontSize = 17.sp,
-                                        )
-                                    },
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        containerColor = Color(0xFFF6F6F9),
-                                        focusedIndicatorColor = Color.Transparent,
-                                        unfocusedIndicatorColor = Color.Transparent,
-                                        disabledIndicatorColor = Color.Transparent,
-                                        errorIndicatorColor = colorResource(id = R.color.error_red),
-                                    ),
-                                    shape = RoundedCornerShape(size = 10.dp),
-                                )
-                                TextField(
-                                    modifier = Modifier
-                                        .border(width = 0.dp, color = Color.White)
-                                        .padding(
-                                            top = 8.dp,
-                                            start = 16.dp,
-                                            end = 16.dp,
-                                            bottom = 16.dp,
-                                        )
-                                        .fillMaxWidth(),
-                                    value = nameTextState.value,
-                                    onValueChange = { it ->
-                                        periodPassTextState.value = it
-                                        periodPassErrorState.value = it.isEmpty()
-                                    },
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                                    singleLine = true,
-                                    textStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
-                                    label = {
-                                        Text(
-                                            text = "Срок действия загранпаспорта",
-                                            color = Color(0xFFA9ABB7),
-                                            fontSize = 17.sp,
-                                        )
-                                    },
-                                    colors = TextFieldDefaults.textFieldColors(
-                                        containerColor = Color(0xFFF6F6F9),
-                                        focusedIndicatorColor = Color.Transparent,
-                                        unfocusedIndicatorColor = Color.Transparent,
-                                        disabledIndicatorColor = Color.Transparent,
-                                        errorIndicatorColor = colorResource(id = R.color.error_red),
-                                    ),
-                                    shape = RoundedCornerShape(size = 10.dp),
-                                )
-                            }
-                        }
-                    }
-                }
-
-                Card(
-                    modifier = Modifier.padding(top = 8.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 13.dp, start = 16.dp, end = 16.dp, bottom = 13.dp),
-                    ) {
-                        Text(
-                            text = "Добавить туриста",
-                            fontSize = 22.sp,
-                            color = Color.Black,
-                            style = TextStyle(lineHeight = 26.4.sp),
-                            fontWeight = FontWeight.Medium,
-                        )
-                        Image(
-                            modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .clickable {
-                                },
-                            imageVector = ImageVector.vectorResource(id = R.drawable.plus_btn_icon),
-                            contentDescription = null,
-                        )
-                    }
-                }
-
-                Card(
-                    modifier = Modifier.padding(top = 8.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                ) {
-                    Column {
-                        Box(
-                            modifier = Modifier.fillMaxWidth()
-                                .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                        ) {
-                            Text(
-                                modifier = Modifier.align(Alignment.CenterStart),
-                                text = "Тур",
-                                color = colorResource(id = R.color.grey_200),
-                                fontSize = 16.sp,
-                                style = TextStyle(
-                                    lineHeight = 19.2.sp,
-                                    fontWeight = FontWeight(400),
-                                ),
-                            )
-
-                            Text(
-                                modifier = Modifier.align(Alignment.CenterEnd).width(132.dp),
-                                text = tourTextState.value,
-                                color = Color.Black,
-                                fontSize = 16.sp,
-                                style = TextStyle(
-                                    lineHeight = 19.2.sp,
-                                    fontWeight = FontWeight(400),
-                                ),
-                                textAlign = TextAlign.End,
-                            )
-                        }
-                        Box(
-                            modifier = Modifier.fillMaxWidth()
-                                .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                        ) {
-                            Text(
-                                modifier = Modifier.align(Alignment.CenterStart),
-                                text = "Топливный сбор",
-                                color = colorResource(id = R.color.grey_200),
-                                fontSize = 16.sp,
-                                style = TextStyle(
-                                    lineHeight = 19.2.sp,
-                                    fontWeight = FontWeight(400),
-                                ),
-                            )
-
-                            Text(
-                                modifier = Modifier.align(Alignment.CenterEnd).width(132.dp),
-                                text = gasTextState.value,
-                                color = Color.Black,
-                                fontSize = 16.sp,
-                                style = TextStyle(
-                                    lineHeight = 19.2.sp,
-                                    fontWeight = FontWeight(400),
-                                ),
-                                textAlign = TextAlign.End,
-                            )
-                        }
-                        Box(
-                            modifier = Modifier.fillMaxWidth()
-                                .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                        ) {
-                            Text(
-                                modifier = Modifier.align(Alignment.CenterStart),
-                                text = "Сервисный сбор",
-                                color = colorResource(id = R.color.grey_200),
-                                fontSize = 16.sp,
-                                style = TextStyle(
-                                    lineHeight = 19.2.sp,
-                                    fontWeight = FontWeight(400),
-                                ),
-                            )
-
-                            Text(
-                                modifier = Modifier.align(Alignment.CenterEnd).width(132.dp),
-                                text = serviceTextState.value,
-                                color = Color.Black,
-                                fontSize = 16.sp,
-                                style = TextStyle(
-                                    lineHeight = 19.2.sp,
-                                    fontWeight = FontWeight(400),
-                                ),
-                                textAlign = TextAlign.End,
-                            )
-                        }
-                        Box(
-                            modifier = Modifier.fillMaxWidth()
-                                .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 16.dp),
-                        ) {
-                            Text(
-                                modifier = Modifier.align(Alignment.CenterStart),
-                                text = "К оплате",
-                                color = colorResource(id = R.color.grey_200),
-                                fontSize = 16.sp,
-                                style = TextStyle(
-                                    lineHeight = 19.2.sp,
-                                    fontWeight = FontWeight(400),
-                                ),
-                            )
-
-                            Text(
-                                modifier = Modifier.align(Alignment.CenterEnd).width(132.dp),
-                                text = finalPriceTextState.value,
-                                color = Color(0xFF0D72FF),
-                                fontSize = 16.sp,
-                                style = TextStyle(
-                                    lineHeight = 19.2.sp,
-                                    fontWeight = FontWeight(600),
-                                ),
-                                textAlign = TextAlign.End,
-                            )
-                        }
-                    }
-                }
-                Card(
-                    modifier = Modifier.padding(top = 8.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 13.dp, start = 16.dp, end = 16.dp, bottom = 13.dp),
-                    ) {
-                        Button(
-                            modifier = Modifier.align(Alignment.Center)
-                                .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 20.dp),
-                            onClick = {
-                                if (emailTextState.value.isEmpty() && numberTextState.value.isEmpty()) {
-                                    if (emailTextState.value.isEmpty()) {
-                                        emailErrorState.value = true
-                                    }
-                                    if (numberTextState.value.isEmpty()) {
-                                        numberErrorState.value = true
-                                    }
-                                }
-                                if (!emailErrorState.value && !numberErrorState.value) {
-                                    findNavController().navigate(R.id.action_bookingFragment_to_orderSuccessFragment)
-                                }
-                            },
-                        ) {
-                            Text(
-                                text = btnMakeOrderTextState.value,
-                                color = Color.Black,
-                                fontSize = 16.sp,
-                                style = TextStyle(
-                                    lineHeight = 17.6.sp,
-                                    fontWeight = FontWeight(500),
-                                ),
-                                textAlign = TextAlign.End,
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        viewModel.bookingLiveData.observe(viewLifecycleOwner) { response ->
-            binding.progressBar.visibility = View.GONE
-
-            if (response.code() == 200) {
-                response.body()?.let {
-                    with(binding) {
-                        tvName.text = it.hotel_name
-                        tvAddress.text = it.hotel_adress
-                        tvRate.text = requireContext().getString(
-                            R.string.rate_hotel,
-                            it.horating.toString(),
-                            it.rating_name,
+                ToolBar()
+                if (bookingLiveData.value?.code() == 200) {
+                    bookingLiveData.value?.body()?.let {
+                        DescriptionBlock(
+                            rateTextState = stringResource(
+                                id = R.string.rate_hotel,
+                                it.horating.toString(),
+                                it.rating_name,
+                            ),
+                            nameOfHotelTextState = it.hotel_name,
+                            addressOfHotelTextState = it.hotel_adress,
                         )
 
-                        tvFlightFrom.text = it.departure
-                        tvCountryCity.text = it.arrival_country
-                        tvDate.text = requireContext().getString(
-                            R.string.tour_dates,
-                            it.tour_date_start,
-                            it.tour_date_stop,
-                        )
-
-                        // Разные окончания
-                        if (it.number_of_nights > 4) {
-                            tvNights.text =
-                                requireContext().getString(
+                        DetailsDescriptionBlock(
+                            flightFromTextState = it.departure,
+                            cityTextState = it.arrival_country,
+                            datesTextState = stringResource(
+                                R.string.tour_dates,
+                                it.tour_date_start,
+                                it.tour_date_stop,
+                            ),
+                            nightsTextState =
+                            if (it.number_of_nights > 4) {
+                                stringResource(
                                     R.string.amount_of_nights_when_5,
                                     it.number_of_nights.toString(),
                                 )
-                        } else {
-                            tvNights.text =
-                                requireContext().getString(
+                            } else {
+                                stringResource(
                                     R.string.amount_of_nights_when_2,
                                     it.number_of_nights.toString(),
                                 )
-                        }
-
-                        tvHotelInDesc.text = it.hotel_name
-                        tvRoomInDesc.text = it.room
-                        tvNutrition.text = it.nutrition
-
-                        if (it.tour_price.toString().length >= 4) {
-                            val priceString = it.tour_price.toString()
-                                .splitAtIndex(it.tour_price.toString().lastIndex - 2)
-
-                            tourTextState.value =
-                                requireContext().getString(
-                                    R.string.price_for_two_without_from,
-                                    priceString.first,
-                                    priceString.second,
-                                )
-                        } else {
-                            tourTextState.value =
-                                requireContext().getString(
-                                    R.string.price,
-                                    it.tour_price.toString(),
-                                )
-                        }
-
-                        if (it.fuel_charge.toString().length >= 4) {
-                            val priceString = it.fuel_charge.toString()
-                                .splitAtIndex(it.fuel_charge.toString().lastIndex - 2)
-
-                            gasTextState.value =
-                                requireContext().getString(
-                                    R.string.price_for_two_without_from,
-                                    priceString.first,
-                                    priceString.second,
-                                )
-                        } else {
-                            gasTextState.value =
-                                requireContext().getString(
-                                    R.string.price,
-                                    it.fuel_charge.toString(),
-                                )
-                        }
-
-                        if (it.service_charge.toString().length >= 4) {
-                            val priceString = it.service_charge.toString()
-                                .splitAtIndex(it.service_charge.toString().lastIndex - 2)
-
-                            serviceTextState.value =
-                                requireContext().getString(
-                                    R.string.price_for_two_without_from,
-                                    priceString.first,
-                                    priceString.second,
-                                )
-                        } else {
-                            serviceTextState.value =
-                                requireContext().getString(
-                                    R.string.price,
-                                    it.service_charge.toString(),
-                                )
-                        }
+                            },
+                            roomTextState = it.room,
+                            nutritionTextState = it.nutrition,
+                            nameOfHotelTextState = it.hotel_name,
+                        )
+                        AboutClientBlock(
+                            emailTextState = emailTextState,
+                            numberTextState = numberTextState,
+                            emailErrorState = emailErrorState,
+                            numberErrorState = numberErrorState,
+                        )
+                        ListOfTouristsBlock(listOfTourists = listOfTourists)
 
                         val finalPrice = it.tour_price + it.fuel_charge + it.service_charge
 
-                        if (finalPrice.toString().length >= 4) {
-                            val priceString = finalPrice.toString()
-                                .splitAtIndex(finalPrice.toString().lastIndex - 2)
+                        PriceBlock(
+                            tourTextState = if (it.tour_price.toString().length >= 4) {
+                                val priceString = it.tour_price.toString()
+                                    .splitAtIndex(it.tour_price.toString().lastIndex - 2)
 
-                            finalPriceTextState.value =
-                                requireContext().getString(
+                                stringResource(
                                     R.string.price_for_two_without_from,
                                     priceString.first,
                                     priceString.second,
                                 )
-                            btnMakeOrderTextState.value = requireContext().getString(
-                                R.string.btn_to_pay_for_two,
-                                priceString.first,
-                                priceString.second,
-                            )
-                        } else {
-                            finalPriceTextState.value =
-                                requireContext().getString(
+                            } else {
+                                stringResource(
+                                    R.string.price,
+                                    it.tour_price.toString(),
+                                )
+                            },
+                            gasTextState = if (it.fuel_charge.toString().length >= 4) {
+                                val priceString = it.fuel_charge.toString()
+                                    .splitAtIndex(it.fuel_charge.toString().lastIndex - 2)
+
+                                stringResource(
+                                    R.string.price_for_two_without_from,
+                                    priceString.first,
+                                    priceString.second,
+                                )
+                            } else {
+                                stringResource(
+                                    R.string.price,
+                                    it.fuel_charge.toString(),
+                                )
+                            },
+                            serviceTextState = if (it.service_charge.toString().length >= 4) {
+                                val priceString = it.service_charge.toString()
+                                    .splitAtIndex(it.service_charge.toString().lastIndex - 2)
+
+                                stringResource(
+                                    R.string.price_for_two_without_from,
+                                    priceString.first,
+                                    priceString.second,
+                                )
+                            } else {
+                                stringResource(
+                                    R.string.price,
+                                    it.service_charge.toString(),
+                                )
+                            },
+
+                            finalPriceTextState = if (finalPrice.toString().length >= 4) {
+                                val priceString = finalPrice.toString()
+                                    .splitAtIndex(finalPrice.toString().lastIndex - 2)
+
+                                stringResource(
+                                    R.string.price_for_two_without_from,
+                                    priceString.first,
+                                    priceString.second,
+                                )
+                            } else {
+                                stringResource(
                                     R.string.price,
                                     finalPrice.toString(),
                                 )
-                            btnMakeOrderTextState.value = requireContext().getString(
-                                R.string.btn_to_pay,
-                                finalPrice.toString(),
-                            )
-                        }
+                            },
+                        )
+                        ButtonBlock(
+                            listOfTourists = listOfTourists,
+                            navController = findNavController(),
+                            btnMakeOrderTextState = if (finalPrice.toString().length >= 4) {
+                                val priceString = finalPrice.toString()
+                                    .splitAtIndex(finalPrice.toString().lastIndex - 2)
+
+                                stringResource(
+                                    R.string.btn_to_pay_for_two,
+                                    priceString.first,
+                                    priceString.second,
+                                )
+                            } else {
+                                stringResource(
+                                    R.string.btn_to_pay,
+                                    finalPrice.toString(),
+                                )
+                            },
+                            emailErrorState = emailErrorState,
+                            emailTextState = emailTextState,
+                            numberTextState = numberTextState,
+                            numberErrorState = numberErrorState,
+                        )
+                    }
+                } else {
+                    bookingLiveData.value?.message()?.let {
+                        ErrorDialog(
+                            "Error ${bookingLiveData.value?.code()}",
+                            it,
+                        ).show(requireActivity().supportFragmentManager, "ErrorDialog")
                     }
                 }
-            } else {
-                ErrorDialog(
-                    "Error ${response.code()}",
-                    response.message(),
-                ).show(requireActivity().supportFragmentManager, "ErrorDialog")
             }
         }
 
         viewModel.errorLiveData.observe(viewLifecycleOwner) { error ->
-            binding.progressBar.visibility = View.GONE
             ErrorDialog(
                 "Some error",
                 error,
             ).show(requireActivity().supportFragmentManager, "ErrorDialog")
         }
 
-        getBookingData()
-
-        binding.btnBack.setOnClickListener {
-            findNavController().navigate(R.id.action_bookingFragment_to_roomFragment)
-        }
-    }
-
-    private fun getBookingData() {
-        binding.progressBar.visibility = View.VISIBLE
         viewModel.getBookingData()
     }
 }

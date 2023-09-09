@@ -63,3 +63,7 @@ kapp/src/main/java/com/example/testprojectincompany/app/presentation/screen/room
 aapp/src/main/java/com/example/testprojectincompany/app/presentation/screen/hotel/HotelFragment.kt,d\d\dd2bbc682438ae660973f7fa90534f834a034b24
 ò
 happ/src/main/java/com/example/testprojectincompany/app/presentation/screen/booking/PhoneFieldWithMask.kt,4\9\49c77de5afb5636e22745badbec4c36210f31797
+ç
+]app/src/main/java/com/example/testprojectincompany/app/presentation/screen/booking/Toolbar.kt,1\a\1ac6f9823b652ad4d00646429cd852d8f6372c63
+ë
+aapp/src/main/java/com/example/testprojectincompany/app/presentation/screen/booking/Description.kt,d\6\d6074f3fc4731ce64c171ca44dfe366629d429de

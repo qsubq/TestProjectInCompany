@@ -27,5 +27,6 @@
     <string name="tour_dates">%1$s – %2$s</string>
     <string name="amount_of_nights_when_5">%1$s ночей</string>
     <string name="amount_of_nights_when_2">%1$s ночи</string>
+    <string name="tourists_number">%1$s турист</string>
     <string name="order_confirmation">Подтверждение заказа №%1$s может\nзанять некоторое время (от 1 часа до суток).\nКак только мы получим ответ от\nтуроператора, вам на почту придет\nуведомление.</string>
 </resources>

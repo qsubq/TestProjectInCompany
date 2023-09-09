@@ -1,7 +1,8 @@
-package com.example.testprojectincompany.app.presentation.screen.booking
+package com.example.testprojectincompany.app.presentation.screen.booking.composable
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,18 +30,19 @@ import com.example.testprojectincompany.R
 @Composable
 fun PhoneField(
     phone: String,
-    errorState: MutableState<Boolean>,
+    errorState: Boolean,
     mask: String = "000 000 00 00",
     maskNumber: Char = '0',
     onPhoneChanged: (String) -> Unit,
 ) {
-    val errorStateRemembered = remember { errorState }
+    var errorStateRemembered = remember { errorState }
 
     TextField(
-        modifier = Modifier.border(width = 0.dp, color = Color.White).fillMaxWidth(),
+        modifier = Modifier.border(width = 0.dp, color = Color.White).fillMaxWidth()
+            .padding(top = 20.dp),
         value = phone,
-        onValueChange = { it ->
-            errorStateRemembered.value = it.isEmpty()
+        onValueChange = {
+            errorStateRemembered = it.isEmpty()
 
             onPhoneChanged(it.take(mask.count { it == maskNumber }))
         },
@@ -54,7 +56,7 @@ fun PhoneField(
         label = {
             Text(text = "Номер телефона", color = Color(0xFFA9ABB7), fontSize = 17.sp)
         },
-        isError = errorStateRemembered.value,
+        isError = errorStateRemembered,
         colors = TextFieldDefaults.textFieldColors(
             containerColor = Color(0xFFF6F6F9),
             focusedIndicatorColor = Color.Transparent,
