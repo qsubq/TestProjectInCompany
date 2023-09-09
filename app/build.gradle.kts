@@ -50,9 +50,9 @@ android {
 }
 
 dependencies {
-    implementation("androidx.compose.ui:ui-android:1.5.0")
     // Jetpack Compose
     platform("androidx.compose:compose-bom:2022.10.00")
+    implementation("androidx.compose.ui:ui-android:1.5.0")
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -64,15 +64,15 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.5.1")
 
     // Dagger 2
-    implementation("com.google.dagger:dagger:2.43.2")
-    kapt("com.google.dagger:dagger-compiler:2.43.2")
+    implementation("com.google.dagger:dagger:${rootProject.extra["daggerVersion"] as String}")
+    kapt("com.google.dagger:dagger-compiler:${rootProject.extra["daggerVersion"] as String}")
     implementation("javax.inject:javax.inject:1")
 
     // Flexbox
     implementation("com.google.android.flexbox:flexbox:${rootProject.extra["flexBoxVersion"] as String}")
 
     // Glide
-    implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation("com.github.bumptech.glide:glide:${rootProject.extra["glideVersion"] as String}")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:${rootProject.extra["retrofitVersion"] as String}")
