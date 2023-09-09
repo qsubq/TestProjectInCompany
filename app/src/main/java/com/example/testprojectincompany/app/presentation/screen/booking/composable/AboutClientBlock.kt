@@ -58,7 +58,7 @@ fun AboutClientBlock(
 
             PhoneField(
                 phone = numberTextState.value,
-                errorState = numberErrorState.value,
+                errorState = numberErrorState,
                 mask = "+7 (***) ***-**-**",
                 maskNumber = '*',
                 onPhoneChanged = { numberTextState.value = it },
@@ -70,7 +70,7 @@ fun AboutClientBlock(
                     .padding(top = 8.dp, bottom = 8.dp)
                     .fillMaxWidth(),
                 value = emailTextState.value,
-                onValueChange = { it ->
+                onValueChange = {
                     if (it.isNotEmpty()) {
                         emailErrorState.value = false
                     }

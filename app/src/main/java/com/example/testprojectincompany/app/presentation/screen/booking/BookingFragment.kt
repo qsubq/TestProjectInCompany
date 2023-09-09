@@ -67,6 +67,7 @@ class BookingFragment : Fragment() {
 
             val numberTextState = remember { mutableStateOf("") }
             val emailTextState = remember { mutableStateOf("") }
+
             val numberErrorState = remember { mutableStateOf(false) }
             val emailErrorState = remember { mutableStateOf(false) }
 

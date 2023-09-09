@@ -30,19 +30,19 @@ import com.example.testprojectincompany.R
 @Composable
 fun PhoneField(
     phone: String,
-    errorState: Boolean,
+    errorState: MutableState<Boolean>,
     mask: String = "000 000 00 00",
     maskNumber: Char = '0',
     onPhoneChanged: (String) -> Unit,
 ) {
-    var errorStateRemembered = remember { errorState }
+    val errorStateRemembered = remember { errorState }
 
     TextField(
         modifier = Modifier.border(width = 0.dp, color = Color.White).fillMaxWidth()
             .padding(top = 20.dp),
         value = phone,
-        onValueChange = {
-            errorStateRemembered = it.isEmpty()
+        onValueChange = { it ->
+            errorStateRemembered.value = it.isEmpty()
 
             onPhoneChanged(it.take(mask.count { it == maskNumber }))
         },
@@ -56,7 +56,7 @@ fun PhoneField(
         label = {
             Text(text = "Номер телефона", color = Color(0xFFA9ABB7), fontSize = 17.sp)
         },
-        isError = errorStateRemembered,
+        isError = errorStateRemembered.value,
         colors = TextFieldDefaults.textFieldColors(
             containerColor = Color(0xFFF6F6F9),
             focusedIndicatorColor = Color.Transparent,
